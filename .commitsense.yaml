@@ -1,0 +1,13 @@
+commit_types:
+    - feat
+    - fix
+    - chore
+    - docs
+    - style
+    - refactor
+    - perf
+    - test
+    - build
+    - ci
+skip_ci_types:
+    - docs
