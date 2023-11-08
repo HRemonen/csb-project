@@ -3,10 +3,14 @@
 <ul>
   {% for choice in question.choice_set.all %}
   <li>
-    {{ choice.choice_text }} -- {{ choice.votes }} vote {{
-    choice.votes|pluralize }}
+    {{ choice.choice_text }} -- {{ choice.votes }}
+    vote{{choice.votes|pluralize}}.
   </li>
   {% endfor %}
 </ul>
 
 <a href="{% url 'securepolls:detail' question.id %}">Vote again?</a>
+
+<br />
+
+<a href="{% url 'securepolls:index' %}">Check other questions</a>
