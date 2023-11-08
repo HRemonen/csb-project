@@ -63,6 +63,6 @@ As the developers had taken care of disabling CSRF tokens and excepted the middl
 CSRF vulnerabilities exists throughout the application on the https://github.com/HRemonen/csb-project/blob/main/securepolls/views.py file and the https://github.com/HRemonen/csb-project/tree/main/securepolls/templates/securepolls directory.
 
 #### FIX:
-Django mitigates CSRF vulnerabilities by default with the use of **csrf_token**s and a **CSRF Middleware**. Most if not all modern trusted browsers and frameworks have also in-built CSRF protection. So the fix would be to remove all of the **@csrf_exempt** from the https://github.com/HRemonen/csb-project/blob/main/securepolls/views.py file and also enable the **{% csrf_token %}** on all of the forms in the https://github.com/HRemonen/csb-project/tree/main/securepolls/templates/securepolls directory.
+Django mitigates CSRF vulnerabilities by default with the use of **csrf_token**s and a **CSRF Middleware**. Most if not all modern trusted browsers and frameworks have also in-built CSRF protection. So the fix would be to remove all of the **@csrf_exempt** from the *views.py* file for example https://github.com/HRemonen/csb-project/blob/1b0b3e58e8fa4bffa4cc82297458dda58d2fb942/securepolls/views.py#L25 and also enable the **{% csrf_token %}** on all of the forms in the *templates* directory for example https://github.com/HRemonen/csb-project/blob/1b0b3e58e8fa4bffa4cc82297458dda58d2fb942/securepolls/templates/securepolls/login.html#L4.
 
 
