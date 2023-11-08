@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
+from django.db import IntegrityError
+
 from .models import Choice, Question
 
 
@@ -23,12 +25,20 @@ def index_view(request):
 @csrf_exempt
 def register_view(request):
     if request.method == "POST":
-        user = User.objects.create_user(
-            username=request.POST["username"], password=request.POST["password"]
-        )
-        user.save()
+        try:
+            user = User.objects.create_user(
+                username=request.POST["username"], password=request.POST["password"]
+            )
+        except IntegrityError:
+            return render(
+                request,
+                "securepolls/register.html",
+                {"error_message": "Username already exists."},
+            )
+        else:
+            user.save()
 
-        return HttpResponseRedirect(reverse("securepolls:login"))
+            return HttpResponseRedirect(reverse("securepolls:login"))
 
     return render(request, "securepolls/register.html")
 
@@ -47,9 +57,11 @@ def login_view(request):
 
     return render(request, "securepolls/login.html")
 
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("securepolls:login"))
+
 
 @csrf_exempt
 def reset_password_view(request):

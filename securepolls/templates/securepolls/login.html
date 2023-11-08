@@ -11,5 +11,13 @@
   <button type="submit">Login</button>
 </form>
 
-<p>Forgot your password? <a href="{% url 'securepolls:reset_password' %}">Request Password Reset</a></p>
-
+<div>
+  <p>
+    Don't have an account?
+    <a href="{% url 'securepolls:register' %}">Register</a>
+  </p>
+  <p>
+    Forgot your password?
+    <a href="{% url 'securepolls:reset_password' %}">Request Password Reset</a>
+  </p>
+</div>

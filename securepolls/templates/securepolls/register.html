@@ -1,5 +1,9 @@
 <h1>Register</h1>
 
+{% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
 <form action="{% url 'securepolls:register' %}" method="post">
   <!-- {% csrf_token %} -->
   <p>Username</p>
@@ -10,3 +14,10 @@
 
   <button type="submit">Register</button>
 </form>
+
+<div>
+  <p>
+    Already have an account?
+    <a href="{% url 'securepolls:login' %}">Login</a>
+  </p>
+</div>

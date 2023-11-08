@@ -13,6 +13,7 @@
       <a href="{% url 'securepolls:logout' %}">Logout</a>
     </div>
     {% endif %} {% if recent_questions %}
+    <h2>Recent questions</h2>
     <ul>
       {% for question in recent_questions %}
       <li>
