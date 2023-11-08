@@ -75,6 +75,10 @@ def reset_password_view(request):
                 {"error_message": "User does not exist."},
             )
         else:
+            # FIX: This is a security vulnerability, the password should come from the user
+            # password = request.POST["password"]
+            # user.set_password(password)
+
             user.set_password("password")
             user.save()
             return HttpResponseRedirect(reverse("securepolls:login"))
@@ -122,3 +126,18 @@ def vote_view(request, question_id):
         selected_choice.save()
 
         return HttpResponseRedirect(reverse("securepolls:results", args=(question.id,)))
+
+
+def users_view(request):
+    # FIX: This is a security vulnerability. We should not be exposing all users.
+    # We should check if user is admin before showing anything. But it is still flaky.
+    # if not request.user.is_superuser:
+    #     return HttpResponseRedirect(reverse("securepolls:index"))
+
+    users = User.objects.all()
+
+    ctx = {
+        "users": users,
+    }
+
+    return render(request, "securepolls/users.html", ctx)

@@ -12,6 +12,10 @@
       <h3>Logged in as {{ user.username }}</h3>
       <a href="{% url 'securepolls:logout' %}">Logout</a>
     </div>
+    {% endif %} {% if user.is_superuser %}
+    <div>
+      <a href="{% url 'securepolls:users' %}">Users</a>
+    </div>
     {% endif %} {% if recent_questions %}
     <h2>Recent questions</h2>
     <ul>
