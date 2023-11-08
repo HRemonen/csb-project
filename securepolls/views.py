@@ -1,6 +1,7 @@
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Choice, User, Question
 
@@ -14,6 +15,7 @@ def index(request):
     return render(request, "securepolls/index.html", ctx)
 
 
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         user = User(
@@ -24,6 +26,7 @@ def register(request):
     return render(request, "securepolls/register.html")
 
 
+@csrf_exempt
 def login(request):
     if request.method == "POST":
         user = User.objects.get(username=request.POST["username"])
@@ -56,6 +59,7 @@ def results(request, question_id):
     return render(request, "polls/results.html", ctx)
 
 
+@csrf_exempt
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
