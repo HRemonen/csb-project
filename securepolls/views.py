@@ -48,6 +48,25 @@ def login_view(request):
     return render(request, "securepolls/login.html")
 
 
+@csrf_exempt
+def reset_password_view(request):
+    if request.method == "POST":
+        try:
+            user = User.objects.get(username=request.POST["username"])
+        except User.DoesNotExist:
+            return render(
+                request,
+                "securepolls/reset_password.html",
+                {"error_message": "User does not exist."},
+            )
+        else:
+            user.set_password("password")
+            user.save()
+            return HttpResponseRedirect(reverse("securepolls:login"))
+
+    return render(request, "securepolls/reset_password.html")
+
+
 def detail_view(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
