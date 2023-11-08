@@ -3,10 +3,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Choice, User, Question
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from .models import Choice, Question
 
 
-def index(request):
+@login_required(login_url="/login")
+def index_view(request):
     recent_questions = Question.objects.order_by("-pub_date")[:5]
 
     ctx = {
@@ -16,30 +21,34 @@ def index(request):
 
 
 @csrf_exempt
-def register(request):
+def register_view(request):
     if request.method == "POST":
-        user = User(
+        user = User.objects.create_user(
             username=request.POST["username"], password=request.POST["password"]
         )
         user.save()
+
+        return HttpResponseRedirect(reverse("securepolls:login"))
 
     return render(request, "securepolls/register.html")
 
 
 @csrf_exempt
-def login(request):
+def login_view(request):
     if request.method == "POST":
-        user = User.objects.get(username=request.POST["username"])
+        user = authenticate(
+            username=request.POST["username"], password=request.POST["password"]
+        )
 
-        if not user or request.POST["password"] != request.POST["password"]:
-            return render(request, "pages/login.html")
+        if user is not None:
+            login(request, user)
 
-        return HttpResponseRedirect(reverse("securepolls:index"))
+            return HttpResponseRedirect(reverse("securepolls:index"))
 
     return render(request, "securepolls/login.html")
 
 
-def detail(request, question_id):
+def detail_view(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     ctx = {
@@ -49,7 +58,7 @@ def detail(request, question_id):
     return render(request, "securepolls/detail.html", ctx)
 
 
-def results(request, question_id):
+def results_view(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     ctx = {
@@ -60,7 +69,7 @@ def results(request, question_id):
 
 
 @csrf_exempt
-def vote(request, question_id):
+def vote_view(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
 
     try:

@@ -1,10 +1,5 @@
 from django.db import models
-
-
-class User(models.Model):
-    username = models.TextField(unique=True)
-    password = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+from django.contrib.auth.models import User
 
 
 class Question(models.Model):
