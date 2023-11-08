@@ -65,7 +65,7 @@ def results_view(request, question_id):
         "question": question,
     }
 
-    return render(request, "polls/results.html", ctx)
+    return render(request, "securepolls/results.html", ctx)
 
 
 @csrf_exempt

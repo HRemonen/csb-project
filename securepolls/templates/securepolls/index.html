@@ -6,9 +6,9 @@
 
   <body>
     <h1>Welcome to the Secure Polls!</h1>
-    {% if latest_question_list %}
+    {% if recent_questions %}
     <ul>
-      {% for question in latest_question_list %}
+      {% for question in recent_questions %}
       <li>
         <a href="{% url 'securepolls:detail' question.id %}"
           >{{ question.question_text }}</a
