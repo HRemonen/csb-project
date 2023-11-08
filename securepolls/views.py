@@ -1,8 +1,8 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Choice, Question
+from .models import Choice, User, Question
 
 
 def index(request):
@@ -12,6 +12,28 @@ def index(request):
         "recent_questions": recent_questions,
     }
     return render(request, "securepolls/index.html", ctx)
+
+
+def register(request):
+    if request.method == "POST":
+        user = User(
+            username=request.POST["username"], password=request.POST["password"]
+        )
+        user.save()
+
+    return render(request, "securepolls/register.html")
+
+
+def login(request):
+    if request.method == "POST":
+        user = User.objects.get(username=request.POST["username"])
+
+        if not user or request.POST["password"] != request.POST["password"]:
+            return render(request, "pages/login.html")
+
+        return HttpResponseRedirect(reverse("securepolls:index"))
+
+    return render(request, "securepolls/login.html")
 
 
 def detail(request, question_id):
@@ -52,4 +74,4 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
 
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+        return HttpResponseRedirect(reverse("securepolls:results", args=(question.id,)))
