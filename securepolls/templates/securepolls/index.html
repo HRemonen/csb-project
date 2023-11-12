@@ -17,7 +17,10 @@
       <a href="{% url 'securepolls:users' %}">Users</a>
     </div>
     {% endif %} {% if recent_questions %}
-    <h2>Recent questions</h2>
+
+    <a href="{% url 'securepolls:create' %}">Create a new poll</a>
+
+    <h2>Recent polls</h2>
     <ul>
       {% for question in recent_questions %}
       <li>
