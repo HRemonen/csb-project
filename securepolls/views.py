@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from django.db import IntegrityError
+from datetime import date
 
 from .models import Choice, Question
 
@@ -20,6 +21,29 @@ def index_view(request):
         "recent_questions": recent_questions,
     }
     return render(request, "securepolls/index.html", ctx)
+
+
+@csrf_exempt
+def create_view(request):
+    if request.method == "POST":
+        question = Question(
+            question_text=request.POST["question"],
+            creator=request.user,
+            pub_date=date.today(),
+        )
+        question.save()
+
+        choices = request.POST.getlist("choices")
+        for choice_text in choices:
+            choice = Choice(
+                question=question,
+                choice_text=choice_text,
+            )
+            choice.save()
+
+        return HttpResponseRedirect(reverse("securepolls:index"))
+
+    return render(request, "securepolls/create.html")
 
 
 @csrf_exempt
