@@ -1,3 +1,5 @@
+REPOSITORY: https://github.com/HRemonen/csb-project
+
 ### FLAW 1: A01:2021 – Broken Access Control
 
 The developers have created a URL for viewing the user information of all the users using the application. This view was solely meant for development admin use only, as the developers did not remember all of the test user information. Somehow, it has made its way into production servers, and anyone can access the user information.
