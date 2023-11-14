@@ -4,13 +4,14 @@ The developers have created a URL for viewing the user information of all the us
 
 #### LOCATION:
 
-https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L162
+https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/views.py#L162
 
 #### FIX:
 
-The developers were on the right track as they have added a *superuser* check in the https://github.com/HRemonen/csb-project/blob/0a13853ea4ac085861e3bc147cda9d8858f23eb0/securepolls/templates/securepolls/index.html#L15. However, the developers have failed to solve the issue where users of any type could simply type in **/users** in the URL and access all of the user information this way.
+The developers were on the right track as they have added a *superuser* check in the https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/templates/securepolls/index.html#L15-L19
+However, the developers have failed to solve the issue where users of any type could simply type in **/users** in the URL and access all of the user information this way.
 
-The solution that would fix the current issue would be to check for *superuser* access in the view as well: https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L163-164
+The solution that would fix the current issue would be to check for *superuser* access in the view as well: https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/views.py#L163-L164
 
 An even better solution would be to remove this feature from the application altogether, as the database is accessible through the Django admin panel, providing access to the user information if needed.
 
@@ -20,11 +21,11 @@ The application was missing a feature to reset user passwords. As the applicatio
 
 #### LOCATION:
 
-https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L91
+https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/views.py#L91
 
 #### FIX:
 
-The most obvious fix would be to let the user prompt the password and also a confirmation of the password. https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L102-L111
+The most obvious fix would be to let the user prompt the password and also a confirmation of the password. https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/views.py#L102-L111
 
 The password and confirm password would then be checked that they match and after that, the user's password would be updated to that password avoiding any boilerplate or suggested passwords at all costs.
 
@@ -65,5 +66,5 @@ As the developers had taken care of disabling CSRF tokens and excepted the middl
 CSRF vulnerabilities exist throughout the application on the https://github.com/HRemonen/csb-project/blob/main/securepolls/views.py file and the https://github.com/HRemonen/csb-project/tree/main/securepolls/templates/securepolls directory.
 
 #### FIX:
-Django mitigates CSRF vulnerabilities by default with the use of **csrf_token**s and a **CSRF Middleware**. Most if not all modern trusted browsers and frameworks have also built-in CSRF protection. So the fix would be to remove all of the **@csrf_exempt** from the *views.py* file, for example, https://github.com/HRemonen/csb-project/blob/1b0b3e58e8fa4bffa4cc82297458dda58d2fb942/securepolls/views.py#L25 and also enable the **{% csrf_token %}** on all of the forms in the *templates* directory for example https://github.com/HRemonen/csb-project/blob/1b0b3e58e8fa4bffa4cc82297458dda58d2fb942/securepolls/templates/securepolls/login.html#L4.
+Django mitigates CSRF vulnerabilities by default with the use of **csrf_token**s and a **CSRF Middleware**. Most if not all modern trusted browsers and frameworks have also built-in CSRF protection. So the fix would be to remove all of the **@csrf_exempt** from the *views.py* file, for example, https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/views.py#L26 and also enable the **{% csrf_token %}** on all of the forms in the *templates* directory for example https://github.com/HRemonen/csb-project/blob/73f415c023a6b5b4360bef8783dcbe13f1f07342/securepolls/templates/securepolls/login.html#L4
 
