@@ -160,8 +160,6 @@ def vote_view(request, question_id):
 
 
 def users_view(request):
-    # FIX: This is a security vulnerability. We should not be exposing all users.
-    # We should check if user is admin before showing anything. But it is still flaky.
     # if not request.user.is_superuser:
     #     return HttpResponseRedirect(reverse("securepolls:index"))
 

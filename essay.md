@@ -4,13 +4,13 @@ The developers have created a URL for viewing the user information of all the us
 
 #### LOCATION:
 
-https://github.com/HRemonen/csb-project/blob/0a13853ea4ac085861e3bc147cda9d8858f23eb0/securepolls/views.py#L131
+https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L162
 
 #### FIX:
 
 The developers were on the right track as they have added a *superuser* check in the https://github.com/HRemonen/csb-project/blob/0a13853ea4ac085861e3bc147cda9d8858f23eb0/securepolls/templates/securepolls/index.html#L15. However, the developers have failed to solve the issue where users of any type could simply type in **/users** in the URL and access all of the user information this way.
 
-The solution that would fix the current issue would be to check for *superuser* access in the view as well: https://github.com/HRemonen/csb-project/blob/0a13853ea4ac085861e3bc147cda9d8858f23eb0/securepolls/views.py#L132
+The solution that would fix the current issue would be to check for *superuser* access in the view as well: https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L163-164
 
 An even better solution would be to remove this feature from the application altogether, as the database is accessible through the Django admin panel, providing access to the user information if needed.
 
@@ -20,11 +20,13 @@ The application was missing a feature to reset user passwords. As the applicatio
 
 #### LOCATION:
 
-https://github.com/HRemonen/csb-project/blob/0a13853ea4ac085861e3bc147cda9d8858f23eb0/securepolls/views.py#L67
+https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L91
 
 #### FIX:
 
-The most obvious fix would be to let the user prompt the password and also a confirmation of the password. The password and confirm password would then be checked that they match and after that, the user's password would be updated to that password avoiding any boilerplate or suggested passwords at all costs.
+The most obvious fix would be to let the user prompt the password and also a confirmation of the password. https://github.com/HRemonen/csb-project/blob/5c89abafd08416ea165e0dfd6c2cc1e2edf6bd18/securepolls/views.py#L102-L111
+
+The password and confirm password would then be checked that they match and after that, the user's password would be updated to that password avoiding any boilerplate or suggested passwords at all costs.
 
 Also, there is a need to verify the user somehow before setting a new password. This would need an update to the user model information, as something like an email would be needed.
 
