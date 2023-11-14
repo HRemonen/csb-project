@@ -99,8 +99,15 @@ def reset_password_view(request):
                 {"error_message": "User does not exist."},
             )
         else:
-            # FIX: This is a security vulnerability, the password should come from the user
             # password = request.POST["password"]
+            # password_confirmation = request.POST["password_confirmation"]
+            
+            # if password != password_confirmation:
+            #     return render(
+            #         request,
+            #         "securepolls/reset_password.html",
+            #         {"error_message": "Passwords do not match."},
+            #     )
             # user.set_password(password)
 
             user.set_password("password")
